@@ -1,11 +1,15 @@
 import Header from "@/components/shared/Header";
 import StairTransition from "@/components/shared/StairTransition";
-import React from "react";
+import { authOptions } from "@/utils/authOptions";
+import { getServerSession } from "next-auth";
 
-const CommonLayout = ({ children }: { children: React.ReactNode }) => {
+const CommonLayout = async ({
+  children,
+}: Readonly<{ children: React.ReactNode }>) => {
+  const session = await getServerSession(authOptions);
   return (
     <div>
-      <Header />
+      <Header session={session} />
       <StairTransition />
       {children}
     </div>

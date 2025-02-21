@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
@@ -6,8 +7,42 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FaGoogle, FaGithub } from "react-icons/fa6"; // ✅ Corrected imports
+import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+
+export type FormValues = {
+  email: string;
+  password: string;
+};
 
 const LoginPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = async (data: FormValues) => {
+    console.log(data);
+    // try {
+    //   const res = await loginUser(data);
+    //   if (res.success) {
+    //     alert(res.message);
+    //     localStorage.setItem("accessToken", res.accessToken);
+    //     router.push("/");
+    //   }
+    // } catch (err: any) {
+    //   console.error(err?.message);
+    //   throw new Error(err?.message);
+    // }
+    // signIn("credentials", {
+    //   email: data?.email,
+    //   password: data?.password,
+    //   redirect: true,
+    //   callbackUrl: "http://localhost:3000/dashboard",
+    // });
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -24,11 +59,22 @@ const LoginPage = () => {
           </h3>
 
           {/* Form */}
-          <form className="flex flex-col gap-6">
-            <Input className="rounded-xl" type="email" placeholder="Email" />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-6"
+          >
+            <Input
+              className="rounded-xl"
+              type="email"
+              id="email"
+              {...register("email")}
+              placeholder="Email"
+            />
             <Input
               className="rounded-xl"
               type="password"
+              id="password"
+              {...register("password")}
               placeholder="Password"
             />
 
@@ -59,6 +105,11 @@ const LoginPage = () => {
             </Button>
 
             <Button
+              onClick={() =>
+                signIn("github", {
+                  callbackUrl: "http://localhost:3000/dashboard",
+                })
+              }
               variant="outline"
               className="flex items-center gap-3 justify-center w-full border-gray-500"
             >

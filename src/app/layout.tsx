@@ -3,6 +3,8 @@ import { JetBrains_Mono } from "next/font/google";
 
 import "./globals.css";
 import PageTransition from "@/components/shared/PageTransition";
+import Providers from "@/lib/Providers";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -21,10 +23,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={jetbrainsMono.variable}>
-        <PageTransition>{children}</PageTransition>
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={jetbrainsMono.variable}>
+          <PageTransition>
+            <TooltipProvider>
+              {" "}
+              {/* ✅ Wrap your app with TooltipProvider */}
+              {children}
+            </TooltipProvider>
+          </PageTransition>
+        </body>
+      </html>
+    </Providers>
   );
 }

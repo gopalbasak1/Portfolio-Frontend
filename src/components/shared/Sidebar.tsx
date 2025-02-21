@@ -3,7 +3,7 @@ import { FaUser, FaCog, FaHome } from "react-icons/fa";
 
 const Sidebar = () => {
   return (
-    <div className=" min-h-screen p-4 border-[#00ff99] border-r-4  text-white">
+    <div className=" min-h-screen p-4 border-[#00ff99] border-r-4  text-white bg-[#111827]">
       <ul className="space-y-4">
         <li>
           <Link
