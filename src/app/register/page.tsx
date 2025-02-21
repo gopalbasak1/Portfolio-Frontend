@@ -1,0 +1,90 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { FaGoogle, FaGithub } from "react-icons/fa6"; // ✅ Corrected imports
+
+const RegisterPage = () => {
+  return (
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+      }}
+      className="py-6"
+    >
+      <div className="container mx-auto flex justify-center">
+        <div className="w-full max-w-md p-10 bg-[#27272c] rounded-xl shadow-lg">
+          <h3 className="text-4xl text-accent text-center mb-6">
+            Register to Your Account
+          </h3>
+
+          {/* Form */}
+          <form className="flex flex-col gap-6">
+            <Input className="rounded-xl" type="text" placeholder="Name" />
+
+            <Input className="rounded-xl" type="email" placeholder="Email" />
+
+            <Input
+              className="rounded-xl"
+              type="password"
+              placeholder="Password"
+            />
+            <Input
+              className="rounded-xl py-2 text-[#9ca49e]"
+              type="file"
+              accept="image/*"
+            />
+
+            <Button
+              type="submit"
+              size="md"
+              className="w-full py-2 hover:text-white/65"
+            >
+              Register
+            </Button>
+          </form>
+
+          {/* OR Divider */}
+          <div className="flex items-center my-4">
+            <div className="flex-grow h-px bg-gray-500" />
+            <span className="mx-2 text-gray-400 text-sm">OR</span>
+            <div className="flex-grow h-px bg-gray-500" />
+          </div>
+
+          {/* Social Login Buttons */}
+          <div className="flex flex-col gap-3">
+            <Button
+              variant="outline"
+              className="flex items-center gap-3 justify-center w-full border-gray-500"
+            >
+              <FaGoogle size={20} /> {/* ✅ Corrected */}
+              Sign in with Google
+            </Button>
+
+            <Button
+              variant="outline"
+              className="flex items-center gap-3 justify-center w-full border-gray-500"
+            >
+              <FaGithub size={20} /> {/* ✅ Corrected */}
+              Sign in with GitHub
+            </Button>
+          </div>
+
+          {/* Signup Link */}
+          <p className="text-gray-400 text-center mt-4">
+            Already have?{" "}
+            <Link href="/login" className="text-blue-400 hover:underline">
+              Login
+            </Link>
+          </p>
+        </div>
+      </div>
+    </motion.section>
+  );
+};
+
+export default RegisterPage;

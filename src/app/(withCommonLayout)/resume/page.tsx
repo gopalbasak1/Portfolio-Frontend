@@ -3,17 +3,14 @@
 import {
   FaHtml5,
   FaCss3,
-  FaJs,
   FaReact,
   FaFigma,
   FaNodeJs,
-  FaMongodb,
   FaGithub,
 } from "react-icons/fa";
 
 import {
   SiTailwindcss,
-  SiNextdotjs,
   SiMongodb,
   SiFirebase,
   SiJsonwebtokens,
