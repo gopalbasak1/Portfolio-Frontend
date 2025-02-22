@@ -5,6 +5,7 @@ import "./globals.css";
 import PageTransition from "@/components/shared/PageTransition";
 import Providers from "@/lib/Providers";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "sonner";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={jetbrainsMono.variable}>
+          <Toaster />
           <PageTransition>
             <TooltipProvider>
               {" "}

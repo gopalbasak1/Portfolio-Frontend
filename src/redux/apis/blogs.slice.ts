@@ -1,18 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Define a service using a base URL and expected endpoints
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.Api_Url,
+    baseUrl: process.env.NEXT_PUBLIC_API_URL, // ✅ Use correct env variable
   }),
   endpoints: (builder) => ({
     getAllBlogs: builder.query({
       query: () => "/blogs",
     }),
+
+    // createUser: builder.mutation({
+    //   query: (data) => ({
+    //     url: "/auth/register",
+    //     method: "POST",
+    //     body: data,
+    //   }),
+    // }),
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const { useGetAllBlogsQuery } = baseApi;

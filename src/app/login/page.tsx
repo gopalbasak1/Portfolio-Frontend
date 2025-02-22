@@ -9,6 +9,9 @@ import Link from "next/link";
 import { FaGoogle, FaGithub } from "react-icons/fa6"; // ✅ Corrected imports
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import loginUser from "@/utils/actions/loginUser";
+import { redirect, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export type FormValues = {
   email: string;
@@ -21,26 +24,37 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+  // console.log("Frontend URL:", process.env.NEXT_PUBLIC_FRONTEND_URL);
+  const router = useRouter();
 
   const onSubmit = async (data: FormValues) => {
     console.log(data);
     // try {
     //   const res = await loginUser(data);
-    //   if (res.success) {
-    //     alert(res.message);
-    //     localStorage.setItem("accessToken", res.accessToken);
+    //   console.log(res);
+    //   if (res.data.accessToken) {
+    //     toast.success(res.message);
+    //     localStorage.setItem("accessToken", res.data.accessToken);
+
     //     router.push("/");
     //   }
     // } catch (err: any) {
     //   console.error(err?.message);
+    //   toast.error(err?.message);
     //   throw new Error(err?.message);
     // }
-    // signIn("credentials", {
-    //   email: data?.email,
-    //   password: data?.password,
-    //   redirect: true,
-    //   callbackUrl: "http://localhost:3000/dashboard",
-    // });
+    const res = await signIn("credentials", {
+      email: data?.email,
+      password: data?.password,
+      redirect: false,
+      // callbackUrl: `http://localhost:3000/dashboard`,
+    });
+    if (res?.error) {
+      toast.error("Invalid credentials. Please try again.");
+    } else {
+      toast.success("Login successful!");
+      router.push(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`);
+    }
   };
 
   return (
@@ -97,6 +111,11 @@ const LoginPage = () => {
           {/* Social Login Buttons */}
           <div className="flex flex-col gap-3">
             <Button
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`,
+                })
+              }
               variant="outline"
               className="flex items-center gap-3 justify-center w-full border-gray-500"
             >
@@ -107,7 +126,7 @@ const LoginPage = () => {
             <Button
               onClick={() =>
                 signIn("github", {
-                  callbackUrl: "http://localhost:3000/dashboard",
+                  callbackUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`,
                 })
               }
               variant="outline"
@@ -121,7 +140,7 @@ const LoginPage = () => {
           {/* Signup Link */}
           <p className="text-gray-400 text-center mt-4">
             Don't have an account?{" "}
-            <Link href="/register" className="text-blue-400 hover:underline">
+            <Link href="/register" className="text-[#14db99] hover:underline">
               Register
             </Link>
           </p>

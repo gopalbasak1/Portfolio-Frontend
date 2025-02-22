@@ -4,6 +4,8 @@ import DashboardClient from "@/components/shared/DashboardClient";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions); // ✅ Fetch session on the server
+  //console.log("Session Data:", session); // ✅ Debugging session data
+
   return <DashboardClient session={session} />;
 };
 

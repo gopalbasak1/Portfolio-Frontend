@@ -14,7 +14,7 @@ const DashboardClient = ({ session }: { session: Session | null }) => {
     >
       <div className="bg-gray-800 p-8 rounded-xl shadow-lg text-center w-full max-w-md">
         <motion.img
-          src={session?.user?.image || "/default-avatar.png"}
+          src={session?.user?.image || ""}
           alt="User Profile"
           className="w-24 h-24 rounded-full mx-auto border-4 border-accent"
           initial={{ scale: 0 }}

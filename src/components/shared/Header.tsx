@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { Button } from "../ui/button";
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -34,7 +33,7 @@ const Header = ({ session }: { session: UserProps | null }) => {
         <div className="hidden xl:flex items-center gap-8">
           <Nav isAuthenticated={isAuthenticated} />
 
-          {isAuthenticated ? (
+          {isAuthenticated && (
             <Popover>
               <PopoverTrigger className="relative flex items-center">
                 <Tooltip>
@@ -53,9 +52,9 @@ const Header = ({ session }: { session: UserProps | null }) => {
                 </Tooltip>
               </PopoverTrigger>
               <PopoverContent
-                align="center" // Aligns it properly
-                side="bottom" // Opens downward
-                sideOffset={10} // Adds spacing from the trigger
+                align="center"
+                side="bottom"
+                sideOffset={10}
                 className="bg-[#1c1c22] border-none text-white p-4 rounded-lg w-[150px] text-center shadow-lg transition-opacity duration-200"
               >
                 <Link
@@ -72,15 +71,6 @@ const Header = ({ session }: { session: UserProps | null }) => {
                 </button>
               </PopoverContent>
             </Popover>
-          ) : (
-            <div className="flex gap-4">
-              <Link href="/login">
-                <Button variant="outline">Login</Button>
-              </Link>
-              <Link href="/register">
-                <Button>Register</Button>
-              </Link>
-            </div>
           )}
         </div>
 
