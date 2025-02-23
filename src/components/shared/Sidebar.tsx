@@ -1,79 +1,168 @@
 "use client";
+import { useState } from "react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaUser, FaCog, FaHome, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaHome, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { Rows4 } from "lucide-react";
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false); // Sidebar state
+
   const isActive = (path: string) => pathname === path;
+
   return (
-    <div className=" min-h-screen p-4 border-[#00ff99] border-r-4  text-white bg-[#111827]">
-      <ul className="space-y-4">
-        <li>
-          <Link
-            href="/"
-            className={`flex items-center space-x-2 p-2 rounded-xl ${
-              isActive("/")
-                ? "underline text-accent "
-                : "hover:text-accent hover:underline"
-            }`}
-          >
-            <FaHome className="h-5 w-5" />
-            <span>Home</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/dashboard"
-            className={`flex items-center space-x-2 p-2 rounded-xl ${
-              isActive("/dashboard")
-                ? "underline text-accent "
-                : "hover:text-accent hover:underline"
-            }`}
-          >
-            <LuLayoutDashboard className="h-5 w-5" />
-            <span>Dashboard</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/dashboard/user-info"
-            className={`flex items-center space-x-2 p-2 rounded-xl ${
-              isActive("/dashboard/user-info")
-                ? "underline text-accent "
-                : "hover:text-accent hover:underline"
-            }`}
-          >
-            <FaUser className="h-5 w-5" />
-            <span>User Info</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/dashboard/settings"
-            className={`flex items-center space-x-2 p-2 rounded-xl ${
-              isActive("/dashboard/settings")
-                ? "underline text-accent "
-                : "hover:text-accent hover:underline"
-            }`}
-          >
-            <FaCog className="h-5 w-5" />
-            <span>Settings</span>
-          </Link>
-        </li>
-      </ul>
-      {/* Sign Out Button */}
+    <>
+      {/* Mobile Toggle Button (Outside Sidebar) */}
       <button
-        onClick={() => signOut()}
-        className="flex items-center space-x-2 p-2 hover:text-accent
-            rounded-xl text-white hover:underline "
+        className="md:hidden fixed top-4 left-4 z-50 bg-[#00ff99] text-gray-900 p-2 rounded-md"
+        onClick={() => setIsOpen(true)}
       >
-        <FaSignOutAlt className="h-5 w-5" />
-        <span>Sign Out</span>
+        <FaBars size={20} />
       </button>
-    </div>
+
+      {/* Sidebar */}
+      <div
+        className={`fixed md:relative top-0 left-0 min-h-screen w-64 bg-[#111827] text-white p-4 border-r-4 border-[#00ff99] transition-transform duration-300
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+      >
+        {/* Close Button Inside Sidebar (Fix Overlapping Issue) */}
+        <button
+          className="md:hidden absolute top-4 right-4 bg-red-500 text-white p-2 rounded-md"
+          onClick={() => setIsOpen(false)}
+        >
+          <FaTimes size={20} />
+        </button>
+
+        <ul className="space-y-4 mt-10">
+          {" "}
+          {/* Add margin to prevent overlap */}
+          <li>
+            <Link
+              href="/"
+              onClick={() => setIsOpen(false)} // Close sidebar when clicked
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <FaHome className="h-5 w-5" />
+              <span>Home</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <LuLayoutDashboard className="h-5 w-5" />
+              <span>Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/usersInfo"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard/usersInfo")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <FaUser className="h-5 w-5" />
+              <span>All-User-Info</span>
+            </Link>
+          </li>
+          {/* Projects */}
+          <li>
+            <Link
+              href="/dashboard/project/createProject"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard/createProject")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <MdOutlineCreateNewFolder className="h-5 w-5" />
+              <span>Create Project</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/project/allProject"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard/allProject")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <Rows4 className="h-5 w-5" />
+              <span>All Project</span>
+            </Link>
+          </li>
+          {/* Blogs*/}
+          <li>
+            <Link
+              href="/dashboard/blog/createBlog"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard/createBlog")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <MdOutlineCreateNewFolder className="h-5 w-5" />
+              <span>Create Blog</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/blog/allBlog"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard/blog/allBlog")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <Rows4 className="h-5 w-5" />
+              <span>All Blog</span>
+            </Link>
+          </li>
+        </ul>
+
+        {/* Sign Out Button */}
+        <button
+          onClick={() => {
+            setIsOpen(false);
+            signOut();
+          }}
+          className="flex items-center space-x-2 text-red-400 hover:text-red-600 p-2  rounded-xl hover:underline mt-4"
+        >
+          <FaSignOutAlt className="h-5 w-5" />
+          <span>Sign Out</span>
+        </button>
+      </div>
+
+      {/* Overlay (For mobile view) */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-50 md:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+    </>
   );
 };
 

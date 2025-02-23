@@ -40,10 +40,10 @@ const Header = ({ session }: { session: UserProps | null }) => {
                   <TooltipTrigger>
                     <Image
                       src={session.user?.image || "/default-avatar.png"}
-                      width={40}
-                      height={40}
+                      width={30}
+                      height={30}
                       alt="User"
-                      className="w-[60px] h-[60px] rounded-full cursor-pointer object-cover border-2 border-accent transition-transform hover:scale-105"
+                      className="w-[50px] h-[50px] rounded-full cursor-pointer object-cover border-2 border-accent transition-transform hover:scale-105"
                     />
                   </TooltipTrigger>
                   <TooltipContent className="bg-gray-800 text-white px-3 py-1 rounded-md text-sm">
@@ -55,7 +55,7 @@ const Header = ({ session }: { session: UserProps | null }) => {
                 align="center"
                 side="bottom"
                 sideOffset={10}
-                className="bg-[#1c1c22] border-none text-white p-4 rounded-lg w-[150px] text-center shadow-lg transition-opacity duration-200"
+                className="bg-[#1c1c22] border-none text-white p-4 w-[150px] text-center shadow-lg transition-opacity duration-200 rounded-xl"
               >
                 <Link
                   href="/dashboard"

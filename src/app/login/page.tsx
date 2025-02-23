@@ -57,6 +57,25 @@ const LoginPage = () => {
     }
   };
 
+  const handleSocialLogin = async (provider: "google" | "github") => {
+    try {
+      const res = await signIn(provider, {
+        redirect: false, // Prevents automatic redirection
+        callbackUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`,
+      });
+
+      if (res?.error) {
+        toast.error(`Failed to sign in with ${provider}. Please try again.`);
+      } else {
+        toast.success(`Signed in with ${provider} successfully!`);
+        router.push(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`);
+      }
+    } catch (error) {
+      console.error("Social login error:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -111,11 +130,7 @@ const LoginPage = () => {
           {/* Social Login Buttons */}
           <div className="flex flex-col gap-3">
             <Button
-              onClick={() =>
-                signIn("google", {
-                  callbackUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`,
-                })
-              }
+              onClick={() => handleSocialLogin("google")}
               variant="outline"
               className="flex items-center gap-3 justify-center w-full border-gray-500"
             >
@@ -124,11 +139,7 @@ const LoginPage = () => {
             </Button>
 
             <Button
-              onClick={() =>
-                signIn("github", {
-                  callbackUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`,
-                })
-              }
+              onClick={() => handleSocialLogin("github")}
               variant="outline"
               className="flex items-center gap-3 justify-center w-full border-gray-500"
             >
