@@ -1,3 +1,4 @@
+import ProjectCard from "@/components/shared/ProjectCard";
 import SliderProject from "@/components/shared/SliderProject";
 
 const Projects = async () => {
@@ -9,7 +10,10 @@ const Projects = async () => {
   console.log(projects);
   return (
     <div>
-      <SliderProject projects={projects} />{" "}
+      <SliderProject projects={projects} />
+      <div className="container mx-auto mt-20">
+        <ProjectCard projects={projects} />
+      </div>
     </div>
   );
 };

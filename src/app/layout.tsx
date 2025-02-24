@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
-
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import PageTransition from "@/components/shared/PageTransition";
 import Providers from "@/lib/Providers";
@@ -25,14 +25,16 @@ export default function RootLayout({
 }>) {
   return (
     <Providers>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={jetbrainsMono.variable}>
           <Toaster />
           <PageTransition>
             <TooltipProvider>
               {" "}
               {/* ✅ Wrap your app with TooltipProvider */}
-              {children}
+              <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                {children}
+              </ThemeProvider>
             </TooltipProvider>
           </PageTransition>
         </body>

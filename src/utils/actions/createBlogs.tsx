@@ -70,21 +70,3 @@ export const createBlog = async (
 
   return blogData;
 };
-
-// export const deletedBlogs = async (data, token) => {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_BACKEND_URL}/blogs/create-blog`,
-//     {
-//       method: "DELETE",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `${token}`, // Attach token
-//       },
-//       body: JSON.stringify(data), // ✅ Ensure JSON matches backend schema
-//     }
-//   );
-//   const blogData = await res.json();
-//   console.log("📥 Backend response:", blogData); // Debugging
-
-//   return projectData;
-// };

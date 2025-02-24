@@ -6,17 +6,20 @@ import { usePathname } from "next/navigation";
 import { FaUser, FaHome, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-import { Rows4 } from "lucide-react";
+import { Mails, Rows4 } from "lucide-react";
 
 const Sidebar = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false); // Sidebar state
+  const [isOpen, setIsOpen] = useState(false);
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string) => {
+    if (path === "/") return pathname === "/";
+    if (path === "/dashboard") return pathname === "/dashboard";
+    return pathname.startsWith(path);
+  };
 
   return (
     <>
-      {/* Mobile Toggle Button (Outside Sidebar) */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-[#00ff99] text-gray-900 p-2 rounded-md"
         onClick={() => setIsOpen(true)}
@@ -24,12 +27,10 @@ const Sidebar = () => {
         <FaBars size={20} />
       </button>
 
-      {/* Sidebar */}
       <div
         className={`fixed md:relative top-0 left-0 min-h-screen w-64 bg-[#111827] text-white p-4 border-r-4 border-[#00ff99] transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
-        {/* Close Button Inside Sidebar (Fix Overlapping Issue) */}
         <button
           className="md:hidden absolute top-4 right-4 bg-red-500 text-white p-2 rounded-md"
           onClick={() => setIsOpen(false)}
@@ -38,12 +39,10 @@ const Sidebar = () => {
         </button>
 
         <ul className="space-y-4 mt-10">
-          {" "}
-          {/* Add margin to prevent overlap */}
           <li>
             <Link
               href="/"
-              onClick={() => setIsOpen(false)} // Close sidebar when clicked
+              onClick={() => setIsOpen(false)}
               className={`flex items-center space-x-2 p-2 rounded-xl ${
                 isActive("/")
                   ? "underline text-[#00ff99]"
@@ -54,6 +53,7 @@ const Sidebar = () => {
               <span>Home</span>
             </Link>
           </li>
+
           <li>
             <Link
               href="/dashboard"
@@ -68,6 +68,7 @@ const Sidebar = () => {
               <span>Dashboard</span>
             </Link>
           </li>
+
           <li>
             <Link
               href="/dashboard/usersInfo"
@@ -82,13 +83,13 @@ const Sidebar = () => {
               <span>All-User-Info</span>
             </Link>
           </li>
-          {/* Projects */}
+
           <li>
             <Link
               href="/dashboard/project/createProject"
               onClick={() => setIsOpen(false)}
               className={`flex items-center space-x-2 p-2 rounded-xl ${
-                isActive("/dashboard/createProject")
+                isActive("/dashboard/project/createProject")
                   ? "underline text-[#00ff99]"
                   : "hover:text-[#00ff99] hover:underline"
               }`}
@@ -97,12 +98,13 @@ const Sidebar = () => {
               <span>Create Project</span>
             </Link>
           </li>
+
           <li>
             <Link
               href="/dashboard/project/allProject"
               onClick={() => setIsOpen(false)}
               className={`flex items-center space-x-2 p-2 rounded-xl ${
-                isActive("/dashboard/allProject")
+                isActive("/dashboard/project/allProject")
                   ? "underline text-[#00ff99]"
                   : "hover:text-[#00ff99] hover:underline"
               }`}
@@ -111,13 +113,13 @@ const Sidebar = () => {
               <span>All Project</span>
             </Link>
           </li>
-          {/* Blogs*/}
+
           <li>
             <Link
               href="/dashboard/blog/createBlog"
               onClick={() => setIsOpen(false)}
               className={`flex items-center space-x-2 p-2 rounded-xl ${
-                isActive("/dashboard/createBlog")
+                isActive("/dashboard/blog/createBlog")
                   ? "underline text-[#00ff99]"
                   : "hover:text-[#00ff99] hover:underline"
               }`}
@@ -126,6 +128,7 @@ const Sidebar = () => {
               <span>Create Blog</span>
             </Link>
           </li>
+
           <li>
             <Link
               href="/dashboard/blog/allBlog"
@@ -140,22 +143,35 @@ const Sidebar = () => {
               <span>All Blog</span>
             </Link>
           </li>
+
+          <li>
+            <Link
+              href="/dashboard/message"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center space-x-2 p-2 rounded-xl ${
+                isActive("/dashboard/message")
+                  ? "underline text-[#00ff99]"
+                  : "hover:text-[#00ff99] hover:underline"
+              }`}
+            >
+              <Mails className="h-5 w-5" />
+              <span>Messages</span>
+            </Link>
+          </li>
         </ul>
 
-        {/* Sign Out Button */}
         <button
           onClick={() => {
             setIsOpen(false);
             signOut();
           }}
-          className="flex items-center space-x-2 text-red-400 hover:text-red-600 p-2  rounded-xl hover:underline mt-4"
+          className="flex items-center space-x-2 text-red-400 hover:text-red-600 p-2 rounded-xl hover:underline mt-4"
         >
           <FaSignOutAlt className="h-5 w-5" />
           <span>Sign Out</span>
         </button>
       </div>
 
-      {/* Overlay (For mobile view) */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 md:hidden"

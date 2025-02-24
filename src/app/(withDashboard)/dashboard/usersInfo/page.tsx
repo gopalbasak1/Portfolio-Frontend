@@ -1,9 +1,19 @@
 import Image from "next/image";
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  image?: string;
+}
 
 const UsersInfo = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`);
-  const users = await res.json();
-
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, {
+    cache: "no-store",
+  });
+  const users: { data: User[] } = await res.json();
+  console.log("userinfo", users);
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
       <h2 className="text-2xl font-bold mb-4">Users Information</h2>
@@ -22,7 +32,7 @@ const UsersInfo = async () => {
           <tbody>
             {users?.data?.length > 0 ? (
               users?.data?.map((user) => (
-                <tr key={user._id} className="text-center bg-gray-800">
+                <tr key={user._id} className="text-center bg-[#111827]">
                   <td className="p-3 border border-gray-700">
                     <Image
                       src={user.image || ""}

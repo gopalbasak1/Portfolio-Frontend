@@ -19,8 +19,8 @@ export type BlogData = {
   title?: string | null;
   content?: string | null;
   category?: string;
-  image?: FileList | null;
-  session: string | null;
+  image?: FileList | string | null;
+  //session: string | null;
 };
 
 const BlogForm = ({ session }: { session: Session | null }) => {
@@ -40,28 +40,39 @@ const BlogForm = ({ session }: { session: Session | null }) => {
 
       if (data.image && data.image.length > 0) {
         const file = data.image[0];
-        imageUrl = await uploadImageToCloudinary(file);
+        if (file instanceof File) {
+          imageUrl = (await uploadImageToCloudinary(file)) || "";
+        }
       }
       const userId = session?.user?.id;
       const accessToken = session?.user?.accessToken;
       console.log("id, token", userId, accessToken);
+
       const formattedData = {
         title: data.title,
         content: data.content,
         category: data.category,
         image: imageUrl || "",
+        // Or session ID if available
       };
       console.log(formattedData, userId, accessToken);
+      // ✅ Check if userId or accessToken is missing
+      if (!userId || !accessToken) {
+        toast.error("User not authenticated. Please log in.");
+        setLoading(false);
+        return;
+      }
       // Pass token to the server function
       const res = await createBlog(formattedData, userId, accessToken);
       console.log("djd", res);
       if (res.success) {
-        toast.success("blog created successfully!");
+        toast.success(res.message);
         router.push("/dashboard/blog/allBlog");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error.message);
-      toast.error("Something went wrong!");
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

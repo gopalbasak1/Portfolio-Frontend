@@ -23,6 +23,10 @@ import { Forward } from "lucide-react";
 
 // Define your Project type
 interface Project {
+  user: {
+    name: string;
+    image: string;
+  };
   _id: string;
   num?: string;
   category: string;
@@ -90,6 +94,22 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
                 ))}
               </ul>
 
+              <div className="flex items-center gap-4  p-3 rounded-lg">
+                <Image
+                  src={project?.user?.image || "/default-user.png"} // Add fallback image
+                  alt={project?.user?.name || "User"}
+                  width={50}
+                  height={50}
+                  className="rounded-full border-2 border-accent shadow-lg h-14 w-14"
+                />
+                <div className="flex flex-col">
+                  <span className="text-lg font-semibold text-white">
+                    {project?.user?.name || "Unknown"}
+                  </span>
+                  <span className="text-sm text-gray-400">Project Author</span>
+                </div>
+              </div>
+
               <div className="border border-white/20"></div>
 
               <div className="flex items-center gap-4">
@@ -124,7 +144,7 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
                     </TooltipProvider>
                   </Link>
                 )}
-
+                {/* Details  button */}
                 <Link href={`/projects/${project._id}`}>
                   <TooltipProvider delayDuration={100}>
                     <Tooltip>
@@ -154,7 +174,7 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
               }}
               modules={[Autoplay]}
             >
-              {projects.data.map((proj) => (
+              {projects.data.slice(0, 3).map((proj) => (
                 <SwiperSlide key={proj._id} className="w-full">
                   <div className="h-[460px] relative group flex justify-center items-center bg-pink-50/20 rounded-xl">
                     <div className="relative w-full h-full rounded-xl">

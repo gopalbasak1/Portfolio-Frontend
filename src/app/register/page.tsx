@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { motion } from "framer-motion";
@@ -17,7 +18,7 @@ export type UserData = {
   name?: string | null;
   email?: string | null;
   password?: string;
-  image?: FileList | null;
+  image?: FileList | null | string;
 };
 
 const RegisterPage = () => {
@@ -65,7 +66,9 @@ const RegisterPage = () => {
 
       if (data.image && data.image.length > 0) {
         const file = data.image[0];
-        imageUrl = await uploadImageToCloudinary(file);
+        if (file instanceof File) {
+          imageUrl = (await uploadImageToCloudinary(file)) || "";
+        }
       }
 
       const formattedData = {
@@ -131,8 +134,8 @@ const RegisterPage = () => {
             className="flex flex-col gap-6"
           >
             <Input
-              className="rounded-xl"
-              type="text"
+              className="rounded-xl bg-[#181818]"
+              type="text "
               id="name"
               {...register("name", { required: true })}
               placeholder="Name"
@@ -140,7 +143,7 @@ const RegisterPage = () => {
             {errors.name && <p className="text-red-500">Name is required</p>}
 
             <Input
-              className="rounded-xl"
+              className="rounded-xl bg-[#181818]"
               type="email"
               id="email"
               {...register("email", { required: true })}
@@ -149,7 +152,7 @@ const RegisterPage = () => {
             {errors.email && <p className="text-red-500">Email is required</p>}
 
             <Input
-              className="rounded-xl"
+              className="rounded-xl bg-[#181818]"
               type="password"
               id="password"
               {...register("password", { required: true })}
@@ -160,7 +163,7 @@ const RegisterPage = () => {
             )}
 
             <Input
-              className="rounded-xl py-2 text-[#9ca49e]"
+              className="rounded-xl py-2 text-[#9ca49e] bg-[#181818]"
               type="file"
               accept="image/*"
               id="image"

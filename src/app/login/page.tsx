@@ -97,14 +97,14 @@ const LoginPage = () => {
             className="flex flex-col gap-6"
           >
             <Input
-              className="rounded-xl"
+              className="rounded-xl bg-[#181818]"
               type="email"
               id="email"
               {...register("email")}
               placeholder="Email"
             />
             <Input
-              className="rounded-xl"
+              className="rounded-xl bg-[#181818]"
               type="password"
               id="password"
               {...register("password")}

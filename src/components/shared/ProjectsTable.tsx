@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -6,19 +8,8 @@ import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Image from "next/image";
 import UpdateProjectModal from "./UpdateProjectModal";
+import { Project } from "@/types";
 // Import the modal component
-
-type Project = {
-  _id: string;
-  title?: string | null;
-  description?: string | null;
-  liveLink?: string;
-  image?: FileList | null;
-  session: string | null;
-  category: string;
-  stack: string;
-  github: string;
-};
 
 type ProjectsTableProps = {
   projects: Project[];
@@ -93,16 +84,19 @@ const ProjectsTable = ({ projects, session }: ProjectsTableProps) => {
         </thead>
         <tbody>
           {projects.map((project, index) => (
-            <tr key={project._id} className="bg-gray-700">
+            <tr key={project._id} className="bg-[#111827]">
               <td className="px-4 py-2 border border-gray-600">{index + 1}</td>
               <td className="px-4 py-2 border border-gray-600">
                 {project.title}
               </td>
               <td className="px-4 py-2 border border-gray-600">
-                {project.description.length > 10
-                  ? project.description.slice(0, 25) + "..."
-                  : project.description}
+                {project.description
+                  ? project.description.length > 10
+                    ? project.description.slice(0, 25) + "..."
+                    : project.description
+                  : "No description"}
               </td>
+
               <td className="px-4 py-2 border border-gray-600 text-center">
                 {project.liveLink && (
                   <a
@@ -116,12 +110,12 @@ const ProjectsTable = ({ projects, session }: ProjectsTableProps) => {
                 )}
               </td>
               <td className="px-4 py-2 border border-gray-600">
-                {project.image && (
+                {typeof project.image === "string" && (
                   <Image
                     width={64}
                     height={64}
                     src={project.image}
-                    alt={project.title}
+                    alt={project.title || "Project image"}
                     className="w-16 h-16 object-cover rounded"
                   />
                 )}
@@ -153,6 +147,7 @@ const ProjectsTable = ({ projects, session }: ProjectsTableProps) => {
         <UpdateProjectModal
           project={selectedProject}
           onClose={() => setIsModalOpen(false)}
+          router={router}
         />
       )}
     </div>

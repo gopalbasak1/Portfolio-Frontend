@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -13,15 +14,25 @@ import {
   uploadImageToCloudinary,
 } from "@/utils/actions/createProjects";
 import { Session } from "next-auth";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
+// Define the form data type
 export type ProjectData = {
-  title?: string | null;
-  description?: string | null;
-  liveLink?: string;
-  image?: FileList | null;
+  title: string;
+  description: string;
+  liveLink: string;
+  image?: FileList | string;
   session: string | null;
   category: string;
-  stack: string;
+  stack: string | { name: string }[]; // ✅ Allow stack to be a string OR an array
   github: string;
 };
 
@@ -29,44 +40,77 @@ const ProjectForm = ({ session }: { session: Session | null }) => {
   const {
     register,
     handleSubmit,
+    control, // Required for Controller
     formState: { errors },
-  } = useForm<ProjectData>();
+  } = useForm<ProjectData>({
+    defaultValues: {
+      title: "",
+      description: "",
+      liveLink: "",
+      category: "",
+      stack: [],
+      github: "",
+    },
+  });
+
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  console.log("ss", session?.user?.accessToken);
 
   const onSubmit = async (data: ProjectData) => {
     try {
       setLoading(true);
       let imageUrl = "";
 
-      if (data.image && data.image.length > 0) {
+      if (
+        data.image &&
+        data.image instanceof FileList &&
+        data.image.length > 0
+      ) {
         const file = data.image[0];
-        imageUrl = await uploadImageToCloudinary(file);
+        if (file instanceof File) {
+          imageUrl = (await uploadImageToCloudinary(file)) || "";
+        }
       }
-      const userId = session?.user?.id;
-      const accessToken = session?.user?.accessToken;
-      // ✅ Convert stack string to an array of objects
-      const stackArray = data.stack
-        .split(",") // Split by commas
-        .map((tech) => ({ name: tech.trim() }))
-        .filter((item) => item.name.length > 0);
-      const formattedData = {
+
+      const userId = session?.user?.id ?? "";
+      const accessToken = session?.user?.accessToken ?? "";
+
+      // Convert stack from a comma-separated string to an array of objects
+      const stackArray =
+        typeof data.stack === "string"
+          ? data.stack
+              .split(",")
+              .map((tech) => ({ name: tech.trim() }))
+              .filter((tech) => tech.name !== "") // Remove empty entries
+          : Array.isArray(data.stack)
+          ? data.stack
+          : [];
+
+      if (stackArray.length === 0) {
+        toast.error("At least one stack technology is required.");
+        setLoading(false);
+        return;
+      }
+
+      const formattedData: ProjectData = {
         title: data.title,
         description: data.description,
         liveLink: data.liveLink,
         image: imageUrl || "",
         github: data.github,
         category: data.category,
-        stack: stackArray,
+        stack: stackArray, // ✅ Now properly formatted
+        session: session?.user?.id || null,
       };
+
       console.log(formattedData, userId, accessToken);
-      // Pass token to the server function
+
       const res = await createProject(formattedData, userId, accessToken);
-      console.log("djd", res);
+
       if (res.success) {
         toast.success("Project created successfully!");
         router.push("/dashboard/project/allProject");
+        router.refresh(); // ✅ Refresh the page to reflect changes
       }
     } catch (error: any) {
       console.error(error.message);
@@ -85,8 +129,8 @@ const ProjectForm = ({ session }: { session: Session | null }) => {
       }}
       className="py-6 bg-[#111827]"
     >
-      <div className="container mx-auto flex justify-center bg-none">
-        <div className="w-full max-w-md p-10 rounded-xl shadow-lg">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto bg-gray-900 p-6 md:p-8 rounded-xl shadow-lg">
           <h3 className="text-4xl text-accent text-center mb-6">
             Create Your Project
           </h3>
@@ -99,86 +143,133 @@ const ProjectForm = ({ session }: { session: Session | null }) => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <Input
-              className="rounded-xl"
-              type="text"
-              id="title"
-              {...register("title", { required: true })}
-              placeholder="Project Title"
-            />
-            {errors.title && <p className="text-red-500">Title is required</p>}
+            {/* Title & Live Link */}
+            <div className="flex md:flex-row flex-col gap-5">
+              <div>
+                <label className="text-white">Project Title *</label>
+                <Input
+                  className="rounded-xl bg-[#181818]"
+                  type="text"
+                  {...register("title", { required: "Title is required" })}
+                  placeholder="Project Title"
+                />
+                {errors.title && (
+                  <p className="text-red-500">{errors.title.message}</p>
+                )}
+              </div>
 
-            <Input
-              className="rounded-xl"
-              type="text"
-              id="liveLink"
-              {...register("liveLink", { required: true })}
-              placeholder="Project Live Link"
-            />
-            {errors.liveLink && (
-              <p className="text-red-500">Project live link is required</p>
-            )}
+              <div>
+                <label className="text-white">Live Link *</label>
+                <Input
+                  className="rounded-xl bg-[#181818]"
+                  type="text"
+                  {...register("liveLink", {
+                    required: "Live link is required",
+                  })}
+                  placeholder="Project Live Link"
+                />
+                {errors.liveLink && (
+                  <p className="text-red-500">{errors.liveLink.message}</p>
+                )}
+              </div>
+            </div>
 
-            {/* New field for GitHub URL */}
-            <Input
-              className="rounded-xl"
-              type="text"
-              id="github"
-              {...register("github", { required: true })}
-              placeholder="GitHub Repository URL"
-            />
-            {errors.github && (
-              <p className="text-red-500">GitHub URL is required</p>
-            )}
+            {/* GitHub & Image Upload */}
+            <div className="flex md:flex-row flex-col gap-5">
+              <div>
+                <label className="text-white">GitHub Repository URL *</label>
+                <Input
+                  className="rounded-xl bg-[#181818]"
+                  type="text"
+                  {...register("github", {
+                    required: "GitHub URL is required",
+                  })}
+                  placeholder="GitHub Repository URL"
+                />
+                {errors.github && (
+                  <p className="text-red-500">{errors.github.message}</p>
+                )}
+              </div>
 
-            {/* New field for Category (select input) */}
-            <select
-              id="category"
-              {...register("category", { required: true })}
-              className="w-full p-2 mt-1 rounded-xl bg-gray-700 text-white"
-            >
-              <option value="">Select Category</option>
-              <option value="Frontend">Frontend</option>
-              <option value="Backend">Backend</option>
-              <option value="Mern-Stack">Mern-Stack</option>
-              <option value="Full-stack">Full-stack</option>{" "}
-              {/* ✅ Ensure lowercase "s" */}
-              <option value="Mobile-App">Mobile-App</option>
-            </select>
+              <div>
+                <label className="text-white">Upload New Image</label>
+                <Input
+                  className="rounded-xl py-2 text-[#9ca49e] bg-[#181818]"
+                  type="file"
+                  accept="image/*"
+                  {...register("image")}
+                />
+              </div>
+            </div>
 
-            {/* New field for Stack (comma separated input) */}
-            <Input
-              className="rounded-xl"
-              type="text"
-              id="stack"
-              {...register("stack", { required: true })}
-              placeholder="Enter stack (e.g., Html 5, Css 3, JavaScript)"
-            />
-            {errors.stack && <p className="text-red-500">Stack is required</p>}
+            {/* Category Selection using Controller */}
+            <div>
+              <label className="text-white">Category *</label>
+              <Controller
+                name="category"
+                control={control}
+                rules={{ required: "Category is required" }}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full bg-[#181818]">
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#181818]">
+                      <SelectGroup>
+                        <SelectLabel>Categories</SelectLabel>
+                        <SelectItem value="Frontend">Frontend</SelectItem>
+                        <SelectItem value="Backend">Backend</SelectItem>
+                        <SelectItem value="Mern-Stack">Mern-Stack</SelectItem>
+                        <SelectItem value="Full-stack">Full-stack</SelectItem>
+                        <SelectItem value="Mobile-App">Mobile-App</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.category && (
+                <p className="text-red-500">{errors.category.message}</p>
+              )}
+            </div>
 
-            <Input
-              className="rounded-xl py-2 text-[#9ca49e]"
-              type="file"
-              accept="image/*"
-              id="image"
-              {...register("image")}
-            />
+            {/* Tech Stack & Description */}
+            <div className="grid md:grid-cols-2 gap-5">
+              <div>
+                <label className="text-white">
+                  Tech Stack (comma-separated) *
+                </label>
+                <Textarea
+                  className="rounded-xl h-48 bg-[#181818]"
+                  {...register("stack", {
+                    required: "Stack is required",
+                    validate: (value) =>
+                      (typeof value === "string" && value.trim().length > 0) ||
+                      "Stack cannot be empty",
+                  })}
+                  placeholder="Enter stack (e.g., React, Tailwind, Node.js)"
+                />
 
-            <Textarea
-              className="rounded-xl w-full h-48"
-              id="description"
-              {...register("description", { required: true })}
-              placeholder="Project Description"
-            />
-            {errors.description && (
-              <p className="text-red-500">Description is required</p>
-            )}
+                {errors.stack && (
+                  <p className="text-red-500">{errors.stack.message}</p>
+                )}
+              </div>
 
-            <Button
-              type="submit"
-              size="md"
-              className="w-full py-2 hover:text-white/65"
-            >
+              <div>
+                <label className="text-white">Project Description *</label>
+                <Textarea
+                  className="rounded-xl h-48 bg-[#181818]"
+                  {...register("description", {
+                    required: "Description is required",
+                  })}
+                  placeholder="Project Description"
+                />
+                {errors.description && (
+                  <p className="text-red-500">{errors.description.message}</p>
+                )}
+              </div>
+            </div>
+
+            <Button type="submit" className="w-full py-2 hover:text-white/65">
               {loading ? "Creating..." : "Create Project"}
             </Button>
           </form>

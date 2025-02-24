@@ -1,12 +1,23 @@
+/* eslint-disable react/no-unescaped-entities */
 import Photo from "@/components/shared/Photo";
 import Socials from "@/components/shared/Socials";
 import Stats from "@/components/shared/Stats";
 import { Button } from "@/components/ui/button";
-
 import React from "react";
 import { FiDownload } from "react-icons/fi";
+import Services from "./services/page";
+import SkillPage from "@/components/shared/SkillPage";
 
-const HomePage = () => {
+import Link from "next/link";
+import HomeProjectCard from "@/components/shared/HomeProjectCard";
+import { Project } from "@/types";
+
+const HomePage = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`, {
+    cache: "no-store",
+  });
+  const projects = await res.json();
+
   return (
     <section className="h-full">
       <div className="container mx-auto h-full">
@@ -23,14 +34,20 @@ const HomePage = () => {
             </p>
             {/* button */}
             <div className="flex flex-col xl:flex-row items-center gap-8">
-              <Button
-                variant="outline"
-                size="lg"
-                className="uppercase flex items-center gap-2"
+              <a
+                href="https://drive.google.com/uc?export=download&id=1gio-qf0cq7PHZP6eLXZm7RQXRbShnDVk"
+                download
+                className="no-underline"
               >
-                <span>Download CV</span>
-                <FiDownload className="text-xl" />
-              </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="uppercase flex items-center gap-2"
+                >
+                  <span>Download CV</span>
+                  <FiDownload className="text-xl" />
+                </Button>
+              </a>
               {/* socials */}
               <div className="mb-8 xl:mb-0">
                 <Socials
@@ -49,6 +66,48 @@ const HomePage = () => {
       </div>
 
       <Stats />
+
+      <div>
+        <SkillPage />
+      </div>
+
+      {/* Projects */}
+      <div className="container mx-auto mt-[9rem]  ">
+        <div>
+          <h2 className="text-4xl text-center mb-10">
+            {" "}
+            My <span className="text-accent mb-5">Projects</span>
+          </h2>
+        </div>
+        <hr className="border-t-2 border-transparent bg-gradient-to-r from-white/20  to-[#6dc5a2] animate-pulse h-1" />
+
+        <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+          {projects?.data?.slice(0, 3)?.map((project: Project) => (
+            <HomeProjectCard key={project._id} project={project} />
+          ))}
+        </div>
+      </div>
+
+      {/* Link to All Projects */}
+      <div className="text-center mt-8">
+        <Link href="/projects">
+          <Button variant="outline" size="lg" className="uppercase">
+            View All Projects
+          </Button>
+        </Link>
+      </div>
+
+      <div className="mt-[11rem] container">
+        <div className="mb-[7.5rem]">
+          <h2 className="text-center text-4xl font-bold text-white my-10">
+            <span className="">Explore</span>
+            <span className="text-accent hover:text-white ml-5">Services</span>
+          </h2>
+        </div>
+        <div className="my-10">
+          <Services />
+        </div>
+      </div>
     </section>
   );
 };

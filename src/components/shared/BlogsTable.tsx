@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useRouter } from "next/navigation";
 import UpdateBlogModal from "./UpdateBlogModal";
@@ -88,7 +90,7 @@ const BlogsTable = ({ blogs, session }: BlogsTableProps) => {
         </thead>
         <tbody>
           {blogs.map((blog, index) => (
-            <tr key={blog._id} className="bg-gray-700">
+            <tr key={blog._id} className="bg-[#111827] hover:bg-gray-800">
               <td className="px-4 py-2 border border-gray-600">{index + 1}</td>
               <td className="px-4 py-2 border border-gray-600">{blog.title}</td>
               <td className="px-4 py-2 border border-gray-600">
@@ -137,6 +139,7 @@ const BlogsTable = ({ blogs, session }: BlogsTableProps) => {
         <UpdateBlogModal
           blog={selectedBlog}
           onClose={() => setIsModalOpen(false)}
+          router={router}
         />
       )}
     </div>

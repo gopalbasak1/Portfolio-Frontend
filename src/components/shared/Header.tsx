@@ -7,6 +7,8 @@ import MobileNav from "./MobileNav";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import Image from "next/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Button } from "../ui/button";
+import ThemeToggle from "@/app/theme-toggle";
 
 type UserProps = {
   user?: {
@@ -29,9 +31,19 @@ const Header = ({ session }: { session: UserProps | null }) => {
           </h1>
         </Link>
 
+        <div>
+          <ThemeToggle />
+        </div>
+
         {/* Desktop Navigation */}
         <div className="hidden xl:flex items-center gap-8">
           <Nav isAuthenticated={isAuthenticated} />
+
+          <Link href="/contact">
+            <Button className="animate-pulse bg-accent hover:bg-[#8d8acd] shadow-lg shadow-[#717c88] text-black font-bold py-2 px-4 rounded-xl">
+              Hire Me
+            </Button>
+          </Link>
 
           {isAuthenticated && (
             <Popover>

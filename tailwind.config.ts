@@ -27,7 +27,9 @@ const config: Config = {
     },
     extend: {
       colors: {
-        primary: "#1c1c22",
+        primary: "#1a1a2e", // Custom dark mode background color
+        secondary: "#16213e",
+        textDark: "#e4e4e4",
         accent: {
           DEFAULT: "#00ff99",
           hover: "#00e187",
