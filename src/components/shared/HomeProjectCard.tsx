@@ -28,7 +28,7 @@ const HomeProjectCard = ({ project }: { project: Project }) => {
           </figure>
           <div className="p-6">
             <div className="flex justify-between">
-              <p className="flex items-center text-teal-600 underline rounded-full py-1 text-sm">
+              <p className="flex items-center text-accent underline rounded-full py-1 text-sm">
                 <FaCalendar className="mr-2" />
                 {dayjs(project.createdAt).format("MM/DD/YYYY")}
               </p>

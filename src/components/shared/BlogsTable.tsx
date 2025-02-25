@@ -16,6 +16,9 @@ type Blog = {
   content: string;
   image: string;
   category: string;
+  user: {
+    name: string;
+  };
 };
 
 type BlogsTableProps = {
@@ -94,7 +97,11 @@ const BlogsTable = ({ blogs, session }: BlogsTableProps) => {
           {blogs.map((blog, index) => (
             <tr key={blog._id} className=" hover:bg-gray-800">
               <td className="px-4 py-2 border border-gray-600">{index + 1}</td>
-              <td className="px-4 py-2 border border-gray-600">{blog.title}</td>
+              <td className="px-4 py-2 border border-gray-600">
+                {blog.title.length > 10
+                  ? blog.title.slice(0, 20) + "..."
+                  : blog.title}
+              </td>
               <td className="px-4 py-2 border border-gray-600">
                 {blog.content.length > 10
                   ? blog.content.slice(0, 25) + "..."
@@ -122,7 +129,7 @@ const BlogsTable = ({ blogs, session }: BlogsTableProps) => {
                 </Link>
               </td>
               <td className="px-4 py-2 border border-gray-600">
-                {session?.user?.name}
+                {blog?.user?.name}
               </td>
               <td className="px-4 py-2 border border-gray-600">
                 <button

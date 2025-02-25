@@ -13,6 +13,8 @@ import {
 } from "../ui/tooltip";
 import { Project } from "@/types";
 import { ScrollArea } from "../ui/scroll-area";
+import { FaCalendar } from "react-icons/fa6";
+import dayjs from "dayjs";
 
 const ProjectsDetails = ({ project }: { project: Project }) => {
   const { title, description, image, liveLink, github, stack, category } =
@@ -78,6 +80,10 @@ const ProjectsDetails = ({ project }: { project: Project }) => {
                     {project?.user?.name || "Unknown"}
                   </span>
                   <span className="text-sm text-gray-400">Project Author</span>
+                  <p className="flex items-center text-accent underline rounded-full py-1 text-sm">
+                    <FaCalendar className="mr-2" />
+                    {dayjs(project.createdAt).format("MM/DD/YYYY")}
+                  </p>
                 </div>
               </div>
               <div className="border border-white/20"></div>
