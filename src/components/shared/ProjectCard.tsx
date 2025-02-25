@@ -1,17 +1,16 @@
 "use client";
-import { Forward } from "lucide-react";
-import Image from "next/image";
-
 import { FaCalendar } from "react-icons/fa6";
 import dayjs from "dayjs";
-import Link from "next/link"; // ✅ Use Next.js Link
+import Link from "next/link";
+import { BsArrowUpRight, BsGithub } from "react-icons/bs";
+import Image from "next/image";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { BsArrowUpRight, BsGithub } from "react-icons/bs";
+import { Forward } from "lucide-react";
 
 interface Project {
   _id: string;
@@ -32,8 +31,8 @@ type SliderProjectProps = {
 
 const ProjectCard = ({ projects }: SliderProjectProps) => {
   return (
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
-      {projects?.data?.map((project) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects?.data?.slice(3).map((project) => (
         <div key={project._id}>
           <div className="w-full shadow-md overflow-hidden border-2 border-white/20 rounded-xl">
             <figure>
@@ -42,7 +41,7 @@ const ProjectCard = ({ projects }: SliderProjectProps) => {
                 width={600}
                 height={100}
                 alt="project image"
-                className="rounded-t-lg h-64 object-cover"
+                className="rounded-t-lg h-64 w-full object-cover rounded-t-lg h-64 object-cover transition-transform duration-300 hover:scale-105"
               />
             </figure>
             <div className="p-6">
@@ -63,19 +62,12 @@ const ProjectCard = ({ projects }: SliderProjectProps) => {
               {project.user?.name && (
                 <p className="text-sm font-medium text-gray-500 mt-2">
                   By:{" "}
-                  <span className=" font-semibold text-accent hover:underline cursor-pointer">
+                  <span className="font-semibold text-accent hover:underline cursor-pointer">
                     {project.user.name}
                   </span>
                 </p>
               )}
 
-              {/* <p className="text-gray-400 mt-2">
-                {project.description.length > 100
-                  ? project.description.slice(0, 60) + "..."
-                  : project.description}
-              </p> */}
-
-              {/* Show Buttons If Links Exist */}
               <div className="flex items-center gap-4 mt-5">
                 {project.liveLink && (
                   <Link href={project.liveLink} target="_blank">

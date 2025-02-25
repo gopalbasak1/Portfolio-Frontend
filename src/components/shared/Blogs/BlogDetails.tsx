@@ -7,12 +7,16 @@ import { useTypewriter } from "react-simple-typewriter";
 const BlogDetails = ({ blog }: { blog: Blog }) => {
   const { title, content, image, category, createdAt } = blog;
 
+  //console.log(category);
+
   const [typeEffect] = useTypewriter({
     words: [category],
     loop: true,
     typeSpeed: 200,
     delaySpeed: 100,
   });
+
+  //console.log(typeEffect);
   return (
     <div
       className="container 
@@ -40,7 +44,7 @@ const BlogDetails = ({ blog }: { blog: Blog }) => {
           {/* Details Section */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
             <div className="space-y-8">
-              <div className="text-4xl font-medium text-transparent text-outline h-10 capitalize">
+              <div className="text-4xl font-medium text-white/25 text-outline h-10 capitalize">
                 {typeEffect}
               </div>
               <h1 className="text-xm font-bold text-white capitalize">

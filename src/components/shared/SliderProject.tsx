@@ -20,6 +20,7 @@ import {
 } from "../ui/tooltip";
 import WorkSliderBtns from "./WorkSliderBtns";
 import { Forward } from "lucide-react";
+import { useTypewriter } from "react-simple-typewriter";
 
 // Define your Project type
 interface Project {
@@ -53,6 +54,13 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
     setProject(projects.data[index]); // Update the project when the slide changes
   };
 
+  const [typeEffect] = useTypewriter({
+    words: ["Projects"],
+    loop: true,
+    typeSpeed: 200,
+    delaySpeed: 100,
+  });
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -63,11 +71,16 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
       className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
     >
       <div className="container mx-auto">
+        <div className="">
+          <h2 className="text-center text-4xl font-bold mb-24">
+            Latest <span className="text-accent">{typeEffect}</span>
+          </h2>
+        </div>
         <div className="flex flex-col xl:flex-row xl:gap-[30px]">
           {/* Left side: Project details */}
           <div className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
             <div className="flex flex-col gap-[30px] h-[50%]">
-              <div className="text-8xl leading-none font-extrabold text-transparent text-outline">
+              <div className="text-8xl leading-none font-bold text-outline text-white/25">
                 {/* Optionally display project.num */}
                 {currentIndex + 1}
               </div>

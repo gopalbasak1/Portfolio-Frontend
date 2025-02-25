@@ -9,6 +9,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Image from "next/image";
 import UpdateProjectModal from "./UpdateProjectModal";
 import { Project } from "@/types";
+import { ScrollArea } from "../ui/scroll-area";
 // Import the modal component
 
 type ProjectsTableProps = {
@@ -69,88 +70,92 @@ const ProjectsTable = ({ projects, session }: ProjectsTableProps) => {
   };
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse text-white">
-        <thead className="bg-gray-800">
-          <tr>
-            <th className="px-4 py-2 border border-gray-700">SL</th>
-            <th className="px-4 py-2 border border-gray-700">Title</th>
-            <th className="px-4 py-2 border border-gray-700">Description</th>
-            <th className="px-4 py-2 border border-gray-700">Live Link</th>
-            <th className="px-4 py-2 border border-gray-700">Image</th>
-            <th className="px-4 py-2 border border-gray-700">Project By</th>
-            <th className="px-4 py-2 border border-gray-700">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map((project, index) => (
-            <tr key={project._id} className="bg-[#111827]">
-              <td className="px-4 py-2 border border-gray-600">{index + 1}</td>
-              <td className="px-4 py-2 border border-gray-600">
-                {project.title}
-              </td>
-              <td className="px-4 py-2 border border-gray-600">
-                {project.description
-                  ? project.description.length > 10
-                    ? project.description.slice(0, 25) + "..."
-                    : project.description
-                  : "No description"}
-              </td>
-
-              <td className="px-4 py-2 border border-gray-600 text-center">
-                {project.liveLink && (
-                  <a
-                    href={project.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 underline hover:text-accent"
-                  >
-                    View
-                  </a>
-                )}
-              </td>
-              <td className="px-4 py-2 border border-gray-600">
-                {typeof project.image === "string" && (
-                  <Image
-                    width={64}
-                    height={64}
-                    src={project.image}
-                    alt={project.title || "Project image"}
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                )}
-              </td>
-              <td className="px-4 py-2 border border-gray-600">
-                {session?.user?.name}
-              </td>
-              <td className="px-4 py-2 border border-gray-600">
-                <button
-                  onClick={() => handleUpdate(project)}
-                  className="text-yellow-400 hover:text-yellow-500 mr-2"
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  onClick={() => handleDelete(project._id)}
-                  className="text-red-400 hover:text-red-500"
-                >
-                  <FaTrash />
-                </button>
-              </td>
+    <ScrollArea className="w-full h-[800px] ">
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse text-white">
+          <thead className="">
+            <tr>
+              <th className="px-4 py-2 border ">SL</th>
+              <th className="px-4 py-2 border ">Title</th>
+              <th className="px-4 py-2 border ">Description</th>
+              <th className="px-4 py-2 border ">Live Link</th>
+              <th className="px-4 py-2 border ">Image</th>
+              <th className="px-4 py-2 border ">Project By</th>
+              <th className="px-4 py-2 border ">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {projects.map((project, index) => (
+              <tr key={project._id} className="">
+                <td className="px-4 py-2 border border-gray-600">
+                  {index + 1}
+                </td>
+                <td className="px-4 py-2 border border-gray-600">
+                  {project.title}
+                </td>
+                <td className="px-4 py-2 border border-gray-600">
+                  {project.description
+                    ? project.description.length > 10
+                      ? project.description.slice(0, 25) + "..."
+                      : project.description
+                    : "No description"}
+                </td>
 
-      {/* Update Project Modal */}
-      {isModalOpen && selectedProject && (
-        <UpdateProjectModal
-          project={selectedProject}
-          onClose={() => setIsModalOpen(false)}
-          router={router}
-        />
-      )}
-    </div>
+                <td className="px-4 py-2 border border-gray-600 text-center">
+                  {project.liveLink && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 underline hover:text-accent"
+                    >
+                      View
+                    </a>
+                  )}
+                </td>
+                <td className="px-4 py-2 border border-gray-600">
+                  {typeof project.image === "string" && (
+                    <Image
+                      width={64}
+                      height={64}
+                      src={project.image}
+                      alt={project.title || "Project image"}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                  )}
+                </td>
+                <td className="px-4 py-2 border border-gray-600">
+                  {session?.user?.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-600">
+                  <button
+                    onClick={() => handleUpdate(project)}
+                    className="text-yellow-400 hover:text-yellow-500 mr-2"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(project._id)}
+                    className="text-red-400 hover:text-red-500"
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Update Project Modal */}
+        {isModalOpen && selectedProject && (
+          <UpdateProjectModal
+            project={selectedProject}
+            onClose={() => setIsModalOpen(false)}
+            router={router}
+          />
+        )}
+      </div>
+    </ScrollArea>
   );
 };
 

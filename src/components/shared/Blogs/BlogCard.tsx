@@ -26,7 +26,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       </figure>
       <div className="p-6 h-[294px]">
         <div className="flex justify-between md:flex-col h-[50px]">
-          <p className="flex items-center text-teal-600 underline rounded-full py-1 text-sm">
+          <p className="flex items-center text-accent underline rounded-full py-1 text-sm">
             <FaCalendar className="mr-2" />
             {dayjs(blog.createdAt).format("MM/DD/YYYY")}
           </p>
@@ -35,8 +35,8 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
         <div className="h-[100px]">
           <h2 className="text-xl font-bold mt-4">
             <span className="text-white/30">Title:</span>{" "}
-            {blog.title.length > 20
-              ? blog.title.slice(0, 30) + "..."
+            {blog.title.length > 10
+              ? blog.title.slice(0, 20) + "..."
               : blog.title}
           </h2>
 

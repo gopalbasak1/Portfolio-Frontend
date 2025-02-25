@@ -10,13 +10,13 @@ export default function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col md:flex-row">
+    <div className="min-h-screen  flex flex-col md:flex-row">
       {/* Sidebar (Collapsible on small screens) */}
       <Sidebar />
 
       {/* Main Content */}
       <div className="flex-1 min-w-0 p-4">
-        <div className="rounded-xl   bg-gray-800">{children}</div>
+        <div className="rounded-xl   ">{children}</div>
       </div>
     </div>
   );

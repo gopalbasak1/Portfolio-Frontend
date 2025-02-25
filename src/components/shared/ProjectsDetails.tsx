@@ -47,7 +47,7 @@ const ProjectsDetails = ({ project }: { project: Project }) => {
           {/* Details Section */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
             <div className="space-y-8">
-              <div className="text-4xl font-medium text-transparent text-outline h-10 ">
+              <div className="text-4xl font-medium text-balance text-outline h-10 ">
                 {typeEffect}
               </div>
               <h1 className="text-3xl font-bold text-white capitalize">

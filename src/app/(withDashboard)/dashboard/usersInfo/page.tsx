@@ -15,7 +15,7 @@ const UsersInfo = async () => {
   const users: { data: User[] } = await res.json();
   console.log("userinfo", users);
   return (
-    <div className="p-6 bg-gray-900 min-h-screen text-white">
+    <div className="p-6  min-h-screen text-white">
       <h2 className="text-2xl font-bold mb-4">Users Information</h2>
 
       <div className="overflow-x-auto">

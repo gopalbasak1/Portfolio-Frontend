@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,10 +7,23 @@ import { FaUser, FaHome, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { Mails, Rows4 } from "lucide-react";
+import ThemeToggle from "@/app/theme-toggle";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  // Prevent scrolling when sidebar is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   const isActive = (path: string) => {
     if (path === "/") return pathname === "/";
@@ -20,17 +33,20 @@ const Sidebar = () => {
 
   return (
     <>
+      {/* Mobile Sidebar Toggle Button */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-[#00ff99] text-gray-900 p-2 rounded-md"
         onClick={() => setIsOpen(true)}
       >
         <FaBars size={20} />
       </button>
-
+      {/* Sidebar */}
       <div
-        className={`fixed md:relative top-0 left-0 min-h-screen w-64 bg-[#111827] text-white p-4 border-r-4 border-[#00ff99] transition-transform duration-300
+        className={`fixed md:relative top-0 left-0 min-h-screen w-64  text-white p-4 border-r-4 border-[#00ff99] transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        style={{ zIndex: 100 }}
       >
+        {/* Close Button (Mobile) */}
         <button
           className="md:hidden absolute top-4 right-4 bg-red-500 text-white p-2 rounded-md"
           onClick={() => setIsOpen(false)}
@@ -170,11 +186,15 @@ const Sidebar = () => {
           <FaSignOutAlt className="h-5 w-5" />
           <span>Sign Out</span>
         </button>
-      </div>
 
+        <div className="hidden md:block lg:block fixed">
+          <ThemeToggle />
+        </div>
+      </div>
+      {/* 🟢 Background Overlay (Closes Sidebar on Click) */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 md:hidden"
+          className="fixed inset-0 bg-black opacity-60 z-40 md:hidden"
           onClick={() => setIsOpen(false)}
         ></div>
       )}

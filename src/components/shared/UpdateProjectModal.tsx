@@ -140,7 +140,7 @@ const UpdateProjectModal: React.FC<UpdateProjectModalProps> = ({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.3 } }}
-      className="fixed inset-0 bg-[#0c0c0d] bg-opacity-50 flex justify-center items-center px-4"
+      className="fixed inset-0 bg-[#111827] bg-opacity-50 flex justify-center items-center px-4"
     >
       <ScrollArea className="h-[700px] rounded-xl border p-2 bg-[#181818]">
         <div className="bg-[#111827] p-6 rounded-xl w-full max-w-lg shadow-lg max-h-[90vh] ">

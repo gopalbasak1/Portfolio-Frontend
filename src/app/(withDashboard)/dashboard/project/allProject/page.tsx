@@ -15,7 +15,7 @@ const AllProject = async () => {
   const projectInfo = await res.json();
 
   return (
-    <div className="p-4 bg-gray-900 min-h-screen text-white">
+    <div className="p-4 min-h-screen text-white">
       <h1 className="text-3xl font-bold mb-4">All Projects</h1>
       {projectInfo.data.length > 0 ? (
         <ProjectsTable session={session} projects={projectInfo.data} />

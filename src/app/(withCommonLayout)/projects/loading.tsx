@@ -1,6 +1,6 @@
 import Spinner from "@/components/shared/Spinner";
 
-const loading = () => {
+const ProjectsLoading = () => {
   return (
     <div>
       <Spinner />
@@ -8,4 +8,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default ProjectsLoading;

@@ -127,10 +127,10 @@ const ProjectForm = ({ session }: { session: Session | null }) => {
         opacity: 1,
         transition: { delay: 0.2, duration: 0.4, ease: "easeIn" },
       }}
-      className="py-6 bg-[#111827]"
+      className="py-6 "
     >
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto bg-gray-900 p-6 md:p-8 rounded-xl shadow-lg">
+        <div className="max-w-2xl mx-auto  p-6 md:p-8 rounded-xl shadow-lg">
           <h3 className="text-4xl text-accent text-center mb-6">
             Create Your Project
           </h3>
