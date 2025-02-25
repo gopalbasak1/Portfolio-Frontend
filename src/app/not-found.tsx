@@ -1,8 +1,8 @@
 "use client";
 import notFound from "./Animation - 1740419068225.json";
 import Link from "next/link";
-import Lottie from "lottie-react";
-
+import dynamic from "next/dynamic";
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 const NotFoundPage = () => {
   return (
     <div className="container mx-auto ">
