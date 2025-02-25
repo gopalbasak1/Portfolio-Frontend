@@ -18,6 +18,7 @@ Welcome to my personal portfolio and blog website! This project is built using N
   - **Skill section** (MERN Stack skills).
   - Featured **projects** showcase.
   - **Services section**.
+  - **Image Upload:** Upload images directly to Cloudinary.
   - **Dark mode toggle** (Dark & very dark blue-magenta shades).
 
 - ✅ **Projects Page (`/projects`)**
@@ -150,6 +151,11 @@ GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+NEXT_PUBLIC_CLOUDINARY_API_URL=cloudinary url
 ```
 
 ## Project Structure
