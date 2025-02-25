@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { Project } from "@/types";
+import { ScrollArea } from "../ui/scroll-area";
 
 const ProjectsDetails = ({ project }: { project: Project }) => {
   const { title, description, image, liveLink, github, stack, category } =
@@ -115,26 +116,36 @@ const ProjectsDetails = ({ project }: { project: Project }) => {
 
           {/* Desktop: Image Section */}
           <div className="hidden lg:block w-full lg:w-1/2">
-            {image ? (
-              <Image
-                src={image}
-                alt={title}
-                width={800}
-                height={450}
-                className="w-full h-auto object-cover rounded-xl"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 rounded-xl">
-                No Image Available
-              </div>
-            )}
+            <ScrollArea className="h-[700px]">
+              {image ? (
+                <Image
+                  src={image}
+                  alt={title}
+                  width={800}
+                  height={400}
+                  className="w-full h-auto object-cover rounded-xl"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 rounded-xl">
+                  No Image Available
+                </div>
+              )}
+            </ScrollArea>
           </div>
         </div>
       </div>
 
       {/* Description Section */}
-      <div className="mt-8">
-        <p className="text-white/80 text-justify">{description}</p>
+      {/* Description Section */}
+      <div className="mt-8 text-white/80 text-justify leading-relaxed">
+        {description && (
+          <p>
+            <span className="text-5xl font-bold text-white">
+              {description.split(" ")[0]}
+            </span>{" "}
+            {description.split(" ").slice(1).join(" ")}
+          </p>
+        )}
       </div>
     </div>
   );

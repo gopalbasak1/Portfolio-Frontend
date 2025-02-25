@@ -129,7 +129,7 @@ const CreateMessage = ({ session }: { session: CustomSession | null }) => {
                 {/* Inputs */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input
-                    className="rounded-xl"
+                    className="rounded-xl bg-[#181818]"
                     type="text"
                     name="name"
                     placeholder="Full Name"
@@ -138,7 +138,7 @@ const CreateMessage = ({ session }: { session: CustomSession | null }) => {
                     required
                   />
                   <Input
-                    className="rounded-xl"
+                    className="rounded-xl bg-[#181818]"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -150,7 +150,7 @@ const CreateMessage = ({ session }: { session: CustomSession | null }) => {
 
                 {/* Textarea */}
                 <Textarea
-                  className="h-[200px]"
+                  className="h-[200px] bg-[#181818]"
                   name="message"
                   placeholder="Type your message here."
                   value={formData?.message}

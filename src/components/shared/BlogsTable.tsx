@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { FaTrash } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
 type Blog = {
   _id: string;
@@ -77,20 +78,21 @@ const BlogsTable = ({ blogs, session }: BlogsTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse text-white">
-        <thead className="bg-gray-800">
+        <thead className="">
           <tr>
             <th className="px-4 py-2 border border-gray-700">SL</th>
             <th className="px-4 py-2 border border-gray-700">Title</th>
             <th className="px-4 py-2 border border-gray-700">Content</th>
             <th className="px-4 py-2 border border-gray-700">Category</th>
             <th className="px-4 py-2 border border-gray-700">Image</th>
+            <th className="px-4 py-2 border border-gray-700">Details</th>
             <th className="px-4 py-2 border border-gray-700">Author</th>
             <th className="px-4 py-2 border border-gray-700">Actions</th>
           </tr>
         </thead>
         <tbody>
           {blogs.map((blog, index) => (
-            <tr key={blog._id} className="bg-[#111827] hover:bg-gray-800">
+            <tr key={blog._id} className=" hover:bg-gray-800">
               <td className="px-4 py-2 border border-gray-600">{index + 1}</td>
               <td className="px-4 py-2 border border-gray-600">{blog.title}</td>
               <td className="px-4 py-2 border border-gray-600">
@@ -111,6 +113,13 @@ const BlogsTable = ({ blogs, session }: BlogsTableProps) => {
                     className="w-16 h-16 object-cover rounded"
                   />
                 )}
+              </td>
+              <td className="px-4 py-2 border border-gray-600">
+                <Link href={`/blogs/${blog._id}`}>
+                  <span className="text-blue-400 cursor-pointer hover:underline">
+                    Details
+                  </span>
+                </Link>
               </td>
               <td className="px-4 py-2 border border-gray-600">
                 {session?.user?.name}

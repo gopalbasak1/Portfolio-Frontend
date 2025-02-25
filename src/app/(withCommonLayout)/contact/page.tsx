@@ -2,6 +2,11 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 import CreateMessage from "@/components/shared/Message/CreateMessage";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Gopal Basak | Contact",
+};
 
 const ContactPage = async () => {
   const session = await getServerSession(authOptions);

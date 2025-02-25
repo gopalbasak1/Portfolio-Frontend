@@ -30,7 +30,9 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
             <FaCalendar className="mr-2" />
             {dayjs(blog.createdAt).format("MM/DD/YYYY")}
           </p>
-          <p className="capitalize">{blog.category}</p>
+          <p className="capitalize text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-500 animate-glow">
+            {blog.category}
+          </p>
         </div>
         <div className="h-[100px]">
           <h2 className="text-xl font-bold mt-4">

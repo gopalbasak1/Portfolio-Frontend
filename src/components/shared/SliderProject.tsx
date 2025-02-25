@@ -85,10 +85,10 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
                 {currentIndex + 1}
               </div>
               <p className="text-[20px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500 capitalize">
-                {project.category} project
+                {project.category}
               </p>
               <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500 capitalize">
-                {project.title} project
+                {project.title}
               </h2>
               <p className="text-white/60">
                 {project.description.length > 10
@@ -99,12 +99,15 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
               {/* Stack */}
               {/* Stack */}
               <ul className="flex flex-wrap gap-2">
-                {project.stack.map((item, index) => (
+                {project.stack.slice(0, 10).map((item, index) => (
                   <li key={index} className="text-xl text-accent">
                     {item.name}
-                    {index !== project.stack.length - 1 && ","}
+                    {index !== project.stack.slice(0, 10).length - 1 && ","}
                   </li>
                 ))}
+                {project.stack.length > 10 && (
+                  <li className="text-xl text-accent">...</li>
+                )}
               </ul>
 
               <div className="flex items-center gap-4  p-3 rounded-lg">
@@ -179,7 +182,7 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
             <Swiper
               spaceBetween={30}
               slidesPerView={1}
-              className="xl:h-[520px] mb-12"
+              className="xl:h-[700px] mb-12"
               onSlideChange={handleSlideChange}
               autoplay={{
                 delay: 3000,
@@ -189,7 +192,7 @@ const SliderProject = ({ projects }: SliderProjectProps) => {
             >
               {projects.data.slice(0, 3).map((proj) => (
                 <SwiperSlide key={proj._id} className="w-full">
-                  <div className="h-[460px] relative group flex justify-center items-center bg-pink-50/20 rounded-xl">
+                  <div className="h-[650px] relative group flex justify-center items-center bg-pink-50/20 rounded-xl">
                     <div className="relative w-full h-full rounded-xl">
                       <Image
                         src={proj.image}

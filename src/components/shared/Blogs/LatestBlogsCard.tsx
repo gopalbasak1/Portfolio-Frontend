@@ -36,6 +36,10 @@ const LatestBlogCard = ({ blog }: LatestBlogCardProps) => {
           {dayjs(blog.createdAt).format("MMM D, YYYY")}
         </div>
 
+        <p className="capitalize text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-500 animate-glow">
+          {blog.category}
+        </p>
+
         {/* Title */}
         <h2 className="text-xl font-semibold text-gray-300 mb-2 line-clamp-2">
           {blog.title}

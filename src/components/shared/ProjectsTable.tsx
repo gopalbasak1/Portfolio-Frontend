@@ -125,7 +125,7 @@ const ProjectsTable = ({ projects, session }: ProjectsTableProps) => {
                   )}
                 </td>
                 <td className="px-4 py-2 border border-gray-600">
-                  {session?.user?.name}
+                  {project?.user?.name}
                 </td>
                 <td className="px-4 py-2 border border-gray-600">
                   <button

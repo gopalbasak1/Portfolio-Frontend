@@ -25,7 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Blogs = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/blogs`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/blogs`, {
+    cache: "no-store",
+  });
   const blogData = await res.json();
   const blogs = blogData?.data;
 

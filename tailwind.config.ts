@@ -42,6 +42,28 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        glow: "glow 1.5s ease-in-out infinite",
+      },
+      keyframes: {
+        glow: {
+          "0%": {
+            textShadow:
+              "0 0 5px rgba(255, 105, 180, 0.7), 0 0 10px rgba(255, 105, 180, 0.5)",
+            transform: "scale(1)",
+          },
+          "50%": {
+            textShadow:
+              "0 0 20px rgba(255, 105, 180, 0.9), 0 0 30px rgba(255, 105, 180, 0.7)",
+            transform: "scale(1.05)",
+          },
+          "100%": {
+            textShadow:
+              "0 0 5px rgba(255, 105, 180, 0.7), 0 0 10px rgba(255, 105, 180, 0.5)",
+            transform: "scale(1)",
+          },
+        },
+      },
     },
   },
   plugins: [tailwindAnimate],

@@ -41,12 +41,12 @@ const ProjectCard = ({ projects }: SliderProjectProps) => {
                 width={600}
                 height={100}
                 alt="project image"
-                className="rounded-t-lg h-64 w-full object-cover rounded-t-lg h-64 object-cover transition-transform duration-300 hover:scale-105"
+                className="rounded-t-lg h-64 w-full object-cover  transition-transform duration-300 hover:scale-105"
               />
             </figure>
             <div className="p-6">
               <div className="flex justify-between">
-                <p className="flex items-center text-teal-600 underline rounded-full py-1 text-sm">
+                <p className="flex items-center text-accent underline rounded-full py-1 text-sm">
                   <FaCalendar className="mr-2" />
                   {dayjs(project.createdAt).format("MM/DD/YYYY")}
                 </p>

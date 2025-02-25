@@ -1,8 +1,14 @@
 // blogDetailsPage.tsx (or similar)
 import BlogDetails from "@/components/shared/Blogs/BlogDetails";
 import { Blog } from "@/types"; // Adjust the type according to your blog structure
+import { Metadata } from "next";
 
 // Fetch blog data using an async function directly in the page
+
+export const metadata: Metadata = {
+  title: "Blogs | Details",
+};
+
 const BlogDetailsPage = async ({ params }: { params: { blogsId: string } }) => {
   const { blogsId } = params;
 

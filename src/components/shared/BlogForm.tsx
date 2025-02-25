@@ -85,7 +85,7 @@ const BlogForm = ({ session }: { session: Session | null }) => {
         opacity: 1,
         transition: { delay: 0.2, duration: 0.4, ease: "easeIn" },
       }}
-      className="py-6 bg-[#111827]"
+      className="py-6 "
     >
       <div className="container mx-auto flex justify-center bg-none">
         <div className="w-full max-w-md p-10 rounded-xl shadow-lg">
@@ -102,7 +102,7 @@ const BlogForm = ({ session }: { session: Session | null }) => {
             className="flex flex-col gap-6"
           >
             <Input
-              className="rounded-xl"
+              className="rounded-xl bg-[#181818]"
               type="text"
               id="title"
               {...register("title", { required: true })}
@@ -111,7 +111,7 @@ const BlogForm = ({ session }: { session: Session | null }) => {
             {errors.title && <p className="text-red-500">Title is required</p>}
 
             <Input
-              className="rounded-xl"
+              className="rounded-xl bg-[#181818]"
               type="text"
               id="category"
               {...register("category", { required: true })}
@@ -122,7 +122,7 @@ const BlogForm = ({ session }: { session: Session | null }) => {
             )}
 
             <Input
-              className="rounded-xl py-2 text-[#9ca49e]"
+              className="rounded-xl py-2 text-[#9ca49e] bg-[#181818]"
               type="file"
               accept="image/*"
               id="image"
@@ -130,7 +130,7 @@ const BlogForm = ({ session }: { session: Session | null }) => {
             />
 
             <Textarea
-              className="rounded-xl w-full h-48"
+              className="rounded-xl w-full h-48 bg-[#181818]"
               id="content"
               {...register("content", { required: true })}
               placeholder="Blog Content"

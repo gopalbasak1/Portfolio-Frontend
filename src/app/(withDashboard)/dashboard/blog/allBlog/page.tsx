@@ -15,7 +15,7 @@ const AllBlog = async () => {
   const blogInfo = await res.json();
 
   return (
-    <div className="p-4 bg-gray-900 min-h-screen text-white">
+    <div className="p-4 min-h-screen text-white">
       <h1 className="text-3xl font-bold mb-4">All Blogs</h1>
       {blogInfo.data.length > 0 ? (
         <BlogsTable session={session} blogs={blogInfo.data} />

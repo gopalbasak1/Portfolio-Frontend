@@ -44,7 +44,9 @@ const AdminMessages = () => {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/messages`,
           {
-            cache: "no-store",
+            next: {
+              revalidate: 30,
+            },
           }
         );
         const data: MessagesResponse = await res.json();
@@ -92,7 +94,7 @@ const AdminMessages = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen  text-white p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Admin Messages</h1>
 
       <div className="overflow-x-auto">
@@ -113,7 +115,7 @@ const AdminMessages = () => {
                 <tr
                   key={msg._id}
                   className={`border-b border-gray-700 hover:bg-gray-800 ${
-                    msg.isRead ? "opacity-50" : ""
+                    msg.isRead ? "opacity-50 cursor-pointer" : "cursor-p"
                   }`}
                 >
                   <td className="p-3 border">{index + 1}</td>

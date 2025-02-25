@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaUser, FaHome, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
+import { FaHome, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-import { Mails, Rows4 } from "lucide-react";
+import { Mails, Rows4, ScrollText } from "lucide-react";
 import ThemeToggle from "@/app/theme-toggle";
+import { MdAddChart } from "react-icons/md";
+import { LuUsersRound } from "react-icons/lu";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -95,7 +97,7 @@ const Sidebar = () => {
                   : "hover:text-[#00ff99] hover:underline"
               }`}
             >
-              <FaUser className="h-5 w-5" />
+              <LuUsersRound className="h-5 w-5" />
               <span>All-User-Info</span>
             </Link>
           </li>
@@ -110,7 +112,7 @@ const Sidebar = () => {
                   : "hover:text-[#00ff99] hover:underline"
               }`}
             >
-              <MdOutlineCreateNewFolder className="h-5 w-5" />
+              <MdAddChart className="h-5 w-5" />
               <span>Create Project</span>
             </Link>
           </li>
@@ -125,7 +127,7 @@ const Sidebar = () => {
                   : "hover:text-[#00ff99] hover:underline"
               }`}
             >
-              <Rows4 className="h-5 w-5" />
+              <ScrollText className="h-5 w-5" />
               <span>All Project</span>
             </Link>
           </li>

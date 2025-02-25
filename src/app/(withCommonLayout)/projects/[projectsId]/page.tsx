@@ -1,5 +1,6 @@
 import ProjectsDetails from "@/components/shared/ProjectsDetails";
 import { Metadata } from "next";
+
 // Import the correct component
 
 export const metadata: Metadata = {
