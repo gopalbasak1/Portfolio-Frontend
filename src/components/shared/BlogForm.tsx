@@ -64,10 +64,12 @@ const BlogForm = ({ session }: { session: Session | null }) => {
       }
       // Pass token to the server function
       const res = await createBlog(formattedData, userId, accessToken);
-      console.log("djd", res);
+      //console.log("djd", res);
       if (res.success) {
         toast.success(res.message);
-        router.push("/dashboard/blog/allBlog");
+        router.push(
+          `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard/blog/allBlog`
+        );
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

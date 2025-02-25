@@ -82,7 +82,7 @@ const RegisterPage = () => {
       console.log(res);
       if (res.success) {
         toast.success(res.message);
-        router.push("/login");
+        router.push(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/login`);
       } else {
         toast.error(res.message || "Registration failed");
       }

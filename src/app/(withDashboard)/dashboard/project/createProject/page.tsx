@@ -5,7 +5,7 @@ import React from "react";
 
 const CreateProject = async () => {
   const session = await getServerSession(authOptions);
-  console.log("p", session);
+  //console.log("p", session);
   return (
     <div>
       <ProjectForm session={session} />

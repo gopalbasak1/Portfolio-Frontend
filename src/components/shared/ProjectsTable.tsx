@@ -32,7 +32,7 @@ const ProjectsTable = ({ projects, session }: ProjectsTableProps) => {
       const token = session?.user?.accessToken;
       if (!token) {
         toast.error("Authentication failed. Please log in again.");
-        router.push("/login");
+        router.push(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/login`);
         return;
       }
 

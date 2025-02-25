@@ -1,15 +1,22 @@
-import Image from "next/image";
+"use client";
+import notFound from "./Animation - 1740419068225.json";
+import Link from "next/link";
+import Lottie from "lottie-react";
 
 const NotFoundPage = () => {
   return (
-    <div className="w-[90%] mx-auto my-5 ">
-      <Image
-        src="https://freefrontend.com/assets/img/html-css-404-page-templates/Pure-CSS-404-Error-Page.gif"
-        width={1000}
-        height={500}
-        alt="not found page"
-        className="w-full rounded-3xl"
-      />
+    <div className="container mx-auto ">
+      <div className="w-[650px] mx-auto">
+        <Lottie animationData={notFound} />
+      </div>
+      <div className="text-center">
+        <Link
+          href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}` || "/"}
+          className="mt-5 bg-white/20 text-white px-6 py-3 rounded-xl text-lg font-semibold hover:bg-accent  transition hover:text-black"
+        >
+          Home
+        </Link>
+      </div>
     </div>
   );
 };

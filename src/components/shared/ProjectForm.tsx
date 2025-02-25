@@ -109,7 +109,9 @@ const ProjectForm = ({ session }: { session: Session | null }) => {
 
       if (res.success) {
         toast.success("Project created successfully!");
-        router.push("/dashboard/project/allProject");
+        router.push(
+          `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard/project/allProject`
+        );
         router.refresh(); // ✅ Refresh the page to reflect changes
       }
     } catch (error: any) {

@@ -5,7 +5,9 @@ import { getServerSession } from "next-auth";
 const AllBlog = async () => {
   const session = await getServerSession(authOptions);
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/blogs`, {
-    cache: "no-store", // Ensure fresh data
+    next: {
+      revalidate: 30,
+    },
   });
 
   if (!res.ok) {

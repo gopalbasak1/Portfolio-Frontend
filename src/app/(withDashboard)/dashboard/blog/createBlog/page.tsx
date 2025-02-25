@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 
 const CreateBlog = async () => {
   const session = await getServerSession(authOptions);
-  console.log("p", session);
+  //console.log("p", session);
   return (
     <div>
       <BlogForm session={session} />
